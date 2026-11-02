@@ -1,6 +1,6 @@
 # ESP-12F Battery + USB Board (KiCad)
 
-KiCad EDA hardware project, not a software repo. There is no package manager, test suite, lint, CI, or build step. Do not look for `package.json`, `requirements.txt`, `Makefile`, or `cargo` commands — none exist.
+KiCad EDA hardware project. Firmware for the ESP-12F will also live in this repo (not yet present). There is no package manager, test suite, lint, CI, or build step yet. Do not look for `package.json`, `requirements.txt`, `Makefile`, or `cargo` commands — none exist until firmware is added.
 
 ## Repo layout
 
@@ -43,6 +43,27 @@ If you run them here, edit those paths first (or run KiCad GUI on `esp12f_batter
 - CH340C is off when USB is unplugged (powered from VBUS) — serial only works with USB connected.
 - Auto-reset requires DTR/RTS; manual fallback: SW2 = RESET, SW3 = FLASH/BOOT (GPIO0).
 - ADC reads battery through JP1; remove the solder jumper to free the ADC pin for an external sensor.
+
+## Firmware ESP-12F (software)
+
+**Stato:** al momento non c'è codice firmware nel repo. Quando verrà aggiunto, suggerisco di metterlo in una cartella separata (es. `firmware/` o `src/`) distintamente dal progetto KiCad.
+
+**Pinout rilevante per il firmware** (da `ESP-12F.md` e dallo schema):
+- UART: `ESP_TXD` / `ESP_RXD` collegati al CH340C tramite R11/R12 (470 Ω) — seriale per debug e flash.
+- Boot strapping: `GPIO15` pull-down (boot da flash SPI interno), `GPIO0`/`GPIO2`/`EN`/`RST` pull-up (10 kΩ).
+  - `GPIO0 = HIGH`: boot normale. `GPIO0 = LOW`: modalità flash/bootloader.
+- ADC: pin `ADC` (TOUT) dell'ESP-12F, range 0–1,0 V. Partitore R20 (100 kΩ) / R21 (27 kΩ) su VBAT → 0,89 V a 4,2 V. Jumper `JP1` (`BAT_ADC_EN`) disconnette il partitore per liberare l'ADC per sensori esterni.
+- LED: `LED3` (blu) segnala +3,3 V attivo.
+- Headers J3/J4: breakout 1×8 su GPIO, +3,3 V e GND.
+
+**Flash / upload:**
+- L'hardware supporta già esptool, Arduino IDE, PlatformIO e VS Code (auto-reset DTR/RTS su GPIO0 + RST, ponte CH340C).
+- CH340C è alimentato solo da VBUS: la seriale funziona solo con USB collegato.
+- Fallback manuale: `SW2` = RESET, `SW3` = FLASH/BOOT (porta GPIO0 a GND).
+
+**Note operative:**
+- Non usare `GPIO0` come output generico se devi entrare spesso in modalità flash: è usato per il boot strapping.
+- L'ADC dell'ESP8266 è a singola posizione e sensibile: tieni il partitore se leggi la batteria, altrimenti togli JP1 per sensori esterni.
 
 ## Version control
 
