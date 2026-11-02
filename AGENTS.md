@@ -46,7 +46,7 @@ If you run them here, edit those paths first (or run KiCad GUI on `esp12f_batter
 
 ## Firmware ESP-12F (software)
 
-**Stato:** al momento non c'è codice firmware nel repo. Quando verrà aggiunto, suggerisco di metterlo in una cartella separata (es. `firmware/` o `src/`) distintamente dal progetto KiCad.
+**Stato:** il firmware va nella cartella `src/` (presente, con un `README.md` placeholder). Mantenerla separata dal progetto KiCad in `esp12f_battery_usb/`.
 
 **Pinout rilevante per il firmware** (da `ESP-12F.md` e dallo schema):
 - UART: `ESP_TXD` / `ESP_RXD` collegati al CH340C tramite R11/R12 (470 Ω) — seriale per debug e flash.
