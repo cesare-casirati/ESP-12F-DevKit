@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# KiCad project settings (user-specific)
+*.kicad_prl
+
+# KiCad backups
+esp12f_battery_usb-backups/
+
+# Generated exports (regenerable / large binaries)
+schematic.pdf
+schematic_svg/
+erc.rpt
