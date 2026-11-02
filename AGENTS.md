@@ -43,3 +43,9 @@ If you run them here, edit those paths first (or run KiCad GUI on `esp12f_batter
 - CH340C is off when USB is unplugged (powered from VBUS) — serial only works with USB connected.
 - Auto-reset requires DTR/RTS; manual fallback: SW2 = RESET, SW3 = FLASH/BOOT (GPIO0).
 - ADC reads battery through JP1; remove the solder jumper to free the ADC pin for an external sensor.
+
+## Version control
+
+- Remote: `git@github.com:cesare-casirati/ESP-12F-DevKit.git` (branch `main`, SSH autenticazione già configurata su questa macchina).
+- Commit first, then push: `git push -u origin main` (già eseguito per il commit iniziale).
+- Il `.gitignore` esclude `.DS_Store`, `__pycache__/`, `*.kicad_prl`, `esp12f_battery_usb-backups/`, e gli export generati (`schematic.pdf`, `schematic_svg/`, `erc.rpt`).
